@@ -6,7 +6,7 @@ pipeline {
     }
     stages {
         stage('Build' {
-            'sh 'echo Build'
+            sh 'echo Build'
         }
 
         stage('End2End Tests') {
