@@ -16,6 +16,11 @@ pipeline {
                 sh 'echo Unit Tests'
                 sh '(cd Gadgeothek; ./gradlew test)'
             }
+            post {
+                always {
+                    junit 'Gadgeothek/app/build/test-results/**/*.xml'
+                }
+            }
         }
         stage('End2End Tests') {
             steps {
