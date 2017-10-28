@@ -7,8 +7,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'echo Build'
-                sh '(cd Gadgeothek; ./gradlew build)'
+                sh 'echo clean build'
+                sh '(cd Gadgeothek; ./gradlew clean build)'
             }
             post {
                 always {
