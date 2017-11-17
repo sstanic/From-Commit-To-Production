@@ -10,14 +10,18 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 
 import ch.hsr.mge.gadgeothek.R;
+import ch.hsr.mge.gadgeothek.presenter.LoginContract;
+import ch.hsr.mge.gadgeothek.presenter.LoginPresenter;
 
-public class LoginActivity extends AbstractAuthenticationActivity {
+public class LoginActivity extends AbstractAuthenticationActivity implements LoginContract.View {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     private EditText emailView;
     private EditText passwordView;
     private View progressView;
     private View loginFormView;
+
+    private LoginContract.UserActionsListener userActionsListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,8 @@ public class LoginActivity extends AbstractAuthenticationActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        userActionsListener = new LoginPresenter(this);
 
         // Set up the login form.
         emailView = (EditText) findViewById(R.id.email);
@@ -51,16 +57,14 @@ public class LoginActivity extends AbstractAuthenticationActivity {
         progressView = findViewById(R.id.login_progress);
     }
 
+
+
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin() {
-
-        // Reset errors.
-        emailView.setError(null);
-        passwordView.setError(null);
 
         // Store values at the time of the login attempt.
         String email = emailView.getText().toString();
@@ -109,5 +113,18 @@ public class LoginActivity extends AbstractAuthenticationActivity {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right_to_left, R.anim.slide_out_right_to_left);
+    }
+
+    @Override
+    public void resetCredentials() {
+
+        // Reset errors.
+        emailView.setError(null);
+        passwordView.setError(null);
+    }
+
+    @Override
+    public void setCredentials(String email, String password) {
+
     }
 }

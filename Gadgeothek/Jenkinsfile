@@ -8,7 +8,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'echo clean build'
-                sh '(cd Gadgeothek; ./gradlew clean build)'
+                sh '(cd Gadgeothek; ./gradlew clean build assembleRelease)'
             }
             post {
                 always {
@@ -22,6 +22,11 @@ pipeline {
                 sh '(cd Gadgeothek; ./gradlew connectedAndroidTest)'
             }
         }
+        stage('Zipalign')
+            steps {
+                sh 'echo Zipalign'
+                sh '(cd Gadgeothek; zipalign -v -p 4 sgadgeothek.apk sgadgeothek-unsigned-aligned.apk )'
+            }
         stage('Publish') {
             steps {
                 sh 'echo Publish'
