@@ -22,11 +22,12 @@ pipeline {
                 sh '(cd Gadgeothek; ./gradlew connectedAndroidTest)'
             }
         }
-        stage('Zipalign')
+        stage('Zipalign') {
             steps {
                 sh 'echo Zipalign'
                 sh '(cd Gadgeothek; zipalign -v -p 4 sgadgeothek.apk sgadgeothek-unsigned-aligned.apk )'
             }
+        }
         stage('Publish') {
             steps {
                 sh 'echo Publish'
