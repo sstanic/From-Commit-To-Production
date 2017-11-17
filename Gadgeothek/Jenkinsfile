@@ -22,15 +22,12 @@ pipeline {
                 sh '(cd Gadgeothek; ./gradlew connectedAndroidTest)'
             }
         }
-        stage('Zipalign') {
+        stage('Package') {
             steps {
-                sh 'echo Zipalign'
-                sh '(cd Gadgeothek/app/build/outputs/apk; zipalign -v -p 4 app-fullConfig-release-unsigned.apk unsigned-aligned.apk )'
+                sh './Gadgeothek/scripts/package-android.sh'
             }
-        }
-        stage('Publish') {
-            steps {
-                sh 'echo Publish'
+            post {
+                success { archiveArtifacts 'Gadgeothek/app/build/outputs/apk/Gadgeothek.apk' }
             }
         }
     }
