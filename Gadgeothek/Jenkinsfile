@@ -25,7 +25,7 @@ pipeline {
         stage('Zipalign') {
             steps {
                 sh 'echo Zipalign'
-                sh '(cd Gadgeothek/app/build/outputs/apk; zipalign -v -p 4 app-fullConfig-release-unsigned.apk.apk unsigned-aligned.apk )'
+                sh '(cd Gadgeothek/app/build/outputs/apk; zipalign -v -p 4 app-fullConfig-release-unsigned.apk unsigned-aligned.apk )'
             }
         }
         stage('Publish') {
